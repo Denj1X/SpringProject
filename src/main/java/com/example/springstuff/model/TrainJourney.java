@@ -1,10 +1,13 @@
 package com.example.springstuff.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,5 +22,16 @@ public class TrainJourney {
     @Column(name = "id")
     private Long id;
 
-    
+    @Size(min = 2, max = 500, message = "First name cannot be shorter than 2 or longer than 500")
+    @JoinColumn(name = "schedule_id", nullable = false)
+    private String name;
+
+    @OneToMany(mappedBy = "trainJourney")
+    private List<Booking> bookings;
+
+    @OneToMany(mappedBy = "trainJourney")
+    private List<JourneyStation> journeyStations;
+
+    @OneToMany(mappedBy = "trainJourney")
+    private List<JourneyCarriage> journeyCarriages;
 }

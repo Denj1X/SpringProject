@@ -2,9 +2,18 @@ package com.example.springstuff.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "schedule")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,31 +24,6 @@ public class Schedule {
     @Column(name = "name")
     private String name;
 
-    public Schedule() {
-    }
-
-    public Schedule(String name) {
-        this.name = name;
-    }
-
-    public Schedule(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    @OneToMany(mappedBy = "schedule")
+    private Set<TrainJourney> trainJourneys;
 }

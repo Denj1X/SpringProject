@@ -2,6 +2,7 @@ package com.example.springstuff.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "passenger")
@@ -26,6 +27,9 @@ public class Passenger {
     @Size(min = 2, max = 100, message = "Password cannot be shorter than 2 or longer than 100")
     @Column(name = "user_password")
     private String userPassword;
+
+    @OneToMany(mappedBy = "passenger")
+    private List<Booking> bookings;
 
     public Passenger() {
     }
