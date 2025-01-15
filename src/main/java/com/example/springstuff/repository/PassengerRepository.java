@@ -13,4 +13,5 @@ import java.util.Optional;
 public interface PassengerRepository extends CrudRepository<Passenger, Long> {
     Optional<Passenger> findByUsername(String username);
     boolean existsByUsername(String username);
+    Passenger findByEmailAddress(String emailAddress);
 }

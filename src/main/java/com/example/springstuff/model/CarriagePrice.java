@@ -25,5 +25,6 @@ public class CarriagePrice {
     @JoinColumn(name = "carriage_class_id", nullable = false)
     private CarriageClass carriageClass;
 
+    @Column(name = "price")
     private Double price;
 }
