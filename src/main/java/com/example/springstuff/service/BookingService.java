@@ -1,5 +1,6 @@
 package com.example.springstuff.service;
 
+import com.example.springstuff.exceptions.ResourceNotFoundException;
 import com.example.springstuff.model.Booking;
 import com.example.springstuff.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,16 +36,17 @@ public class BookingService {
         return bookingRepository.save(booking);
     }
 
-    public Booking updateBooking(Long id, Booking booking) {
-        Optional<Booking> existingBooking = getBookingById(id);
-        if (existingBooking.isPresent()) {
-            Booking updatedBooking = existingBooking.get();
-            updatedBooking.setAmountPaid(booking.getAmountPaid());
-            updatedBooking.setBookingDate(booking.getBookingDate());
-            updatedBooking.setSeatNo(booking.getSeatNo());
-            return bookingRepository.save(updatedBooking);
+    public Booking updateBooking(Long id, Booking updatedBooking) {
+        Optional<Booking> optionalBooking = getBookingById(id);
+
+        if (optionalBooking.isPresent()) {
+            Booking existingBooking = optionalBooking.get();
+            existingBooking.setAmountPaid(updatedBooking.getAmountPaid());
+            existingBooking.setBookingDate(updatedBooking.getBookingDate());
+            existingBooking.setSeatNo(updatedBooking.getSeatNo());
+            return bookingRepository.save(existingBooking);
         } else {
-            throw new IllegalArgumentException("Booking not found with id: " + id);
+            throw new ResourceNotFoundException("Booking not found with id: " + id);
         }
     }
 
@@ -53,6 +55,9 @@ public class BookingService {
     }
 
     public void deleteBooking(Long id) {
+        if (!bookingRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Booking not found with id: " + id);
+        }
         bookingRepository.deleteById(id);
     }
 }
