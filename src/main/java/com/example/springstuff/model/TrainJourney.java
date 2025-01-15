@@ -22,8 +22,12 @@ public class TrainJourney {
     @Column(name = "id")
     private Long id;
 
-    @Size(min = 2, max = 500, message = "First name cannot be shorter than 2 or longer than 500")
+    @ManyToOne
     @JoinColumn(name = "schedule_id", nullable = false)
+    private Schedule schedule;
+
+    @Size(min = 2, max = 500, message = "First name cannot be shorter than 2 or longer than 500")
+    @Column(name = "name")
     private String name;
 
     @OneToMany(mappedBy = "trainJourney")

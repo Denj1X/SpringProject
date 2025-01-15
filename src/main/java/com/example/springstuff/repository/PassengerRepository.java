@@ -10,8 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public class PassengerRepository {
-    public interface UserRepository extends  CrudRepository<Passenger, Long>{
-        Optional<Passenger> findByUsername(String username);
-    }
+public interface PassengerRepository extends CrudRepository<Passenger, Long> {
+    Optional<Passenger> findByUsername(String username);
+    boolean existsByUsername(String username);
 }
